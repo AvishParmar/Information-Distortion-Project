@@ -1,4 +1,3 @@
-from __future__ import annotations
 from random import sample
 from flask import Flask, jsonify, request, abort
 from flask_cors import CORS

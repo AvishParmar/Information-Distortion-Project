@@ -1,0 +1,36 @@
+.main-card {
+  width: 100%;
+  text-align: center;
+  padding-top: 25px;
+  background-color: aquamarine;
+}
+
+.main-card-content {
+  text-align: center;
+  padding-top: 20px;
+}
+
+.home-button{
+  height: auto;
+  width: 350px;
+  }
+
+.top-bar {
+  width: 100%;
+	display: inline-grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-rows: 50px;
+  vertical-align: middle;
+}
+
+.back-button{
+  float: left;
+  width: 200px;
+  padding-left: 10px;
+}
+
+.search-bar {
+  float: right;
+  width: 300px;
+  padding-right: 40px;
+}

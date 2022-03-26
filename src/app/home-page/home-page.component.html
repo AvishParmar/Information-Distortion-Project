@@ -1,1 +1,38 @@
-<p>home-page works!</p>
+<mat-card class="main-card">
+    <mat-card-title>Information Distortion Dataset Processor</mat-card-title>
+    <mat-card-subtitle>Dept. of Computer Science, Stony Brook University</mat-card-subtitle>
+    <mat-card-content class="main-card-content" *ngIf="homeFlag">
+        <p> Web Interface for annotation and review of Medical
+            Headlines dataset containing Information Distortion.</p>
+    </mat-card-content>
+    <mat-card-actions>
+        <button mat-raised-button class="home-button" color="primary" (click)="btnClick('annotate')"
+            *ngIf="homeFlag">Annotate</button>
+        <p></p>
+        <button mat-raised-button class="home-button" color="accent" (click)="btnClick('validate')"
+            *ngIf="homeFlag">Validate</button>
+        <div class="top-bar" *ngIf="annotateFlag || validateFlag">
+            <div>
+                <button mat-raised-button class="back-button" (click)="btnClick('home')" *ngIf="!homeFlag">
+                    <mat-icon>arrow_back_ios</mat-icon>
+                    Back
+                </button>
+            </div>
+            <div>
+                <h1 *ngIf="annotateFlag">Headline Annotation</h1>
+                <h1 *ngIf="validateFlag">Headline Validation</h1>
+            </div>
+            <div>
+                <mat-form-field appearance="outline" class="search-bar">
+                    <mat-label>Retrieve headline by serial no.</mat-label>
+                    <input type="number" [(ngModel)]="inputSrNo" name="inputSrNo" matInput placeholder="Enter sr no.">
+                    <button matSuffix mat-button (click)="btnClick('search')">
+                        <mat-icon>search</mat-icon>
+                    </button>
+                </mat-form-field>
+            </div>
+        </div>
+    </mat-card-actions>
+</mat-card>
+<app-annotate-page *ngIf="annotateFlag" [headline]="headline"></app-annotate-page>
+<app-validate-page *ngIf="validateFlag" [headline]="headline"></app-validate-page>

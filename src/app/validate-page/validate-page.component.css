@@ -1,0 +1,32 @@
+.validate-form {
+  margin-top: 50px;
+  width: 100%;
+}
+
+.validate-card {
+  text-align: center;
+  margin: 10px;
+}
+
+.validate-card-content {
+  text-align: left;
+  font-size: 17px;
+}
+
+.valid-input {
+  width: 100%;
+}  
+
+.valid-cat-select {
+  width: 300px;
+}  
+
+mat-selection-list{
+  max-height: 150px;
+  overflow: auto;
+}
+
+.valid-list-item {
+  text-align: left;
+  font-size: 12px;
+}

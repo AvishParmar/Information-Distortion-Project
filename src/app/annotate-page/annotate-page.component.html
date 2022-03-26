@@ -1,1 +1,44 @@
-<p>annotate-page works!</p>
+<mat-card class="annotate-card">
+    <p></p>
+    <mat-card-content class="annotate-card-content">
+        <div class="top-bar">
+            <p> [{{headline.srno}}] <b>Original Headline:</b> {{headline.og_headline}}</p>
+        </div>
+        <p></p>
+        <mat-divider></mat-divider>
+        <div mat-subheader>Previous annotations:</div>
+        <mat-list role="list" class="anno-list">
+            <mat-list-item *ngFor="let anno of headline.annotations" role="listitem" class="anno-list-item">
+                <span matLine><b>Distortion Category:</b> {{anno.distortion_category}}</span>
+                <span matLine><b>Distorted Headline:</b> {{anno.dist_headline}}</span>
+                <span matLine>User Id: {{anno.userid}} | Edit State: <b>{{anno.edit_state}}</b></span>
+            </mat-list-item>
+        </mat-list>
+        <form class="annotate-form" #annotateForm="ngForm">
+            <mat-form-field class="anno-cat-select" appearance="fill">
+                <mat-label>Distortion category</mat-label>
+                <mat-select [(ngModel)]="inputDistCat" name="inputDistCat">
+                    <mat-option *ngFor="let category of distortion_categories" [value]="category">
+                        {{category}}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+            <mat-form-field class="anno-input" appearance="fill">
+                <mat-label>Distorted Headline</mat-label>
+                <input matInput #inputText maxlength="256" placeholder="Enter distorted version.."
+                    [(ngModel)]="inputDist" name="inputDist">
+                <mat-hint align="start"><strong>Please skip this example in case of uncertainities.</strong> </mat-hint>
+                <mat-hint align="end">{{inputText.value.length}} characters</mat-hint>
+            </mat-form-field>
+        </form>
+    </mat-card-content>
+    <mat-card-actions>
+        <button mat-raised-button class="global-button" color="warn" (click)="btnClick('submit')">
+            <mat-icon>check_circle</mat-icon>
+            Submit
+        </button>
+        <button mat-raised-button class="global-button" (click)="btnClick('next')">Next
+            <mat-icon>last_page</mat-icon>
+        </button>
+    </mat-card-actions>
+</mat-card>

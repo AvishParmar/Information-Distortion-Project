@@ -19,7 +19,7 @@ export class DatasetService {
 
     return this.http.get<string>(this.serverUrl + '/headline', { headers, params }).pipe(
       catchError((error) => {
-        return throwError(() => new Error('[Error] Fetching annotate data: ' + error));
+        return throwError(() => new Error('[Error] Fetching headline data: ' + error.message));
       })
     );
   }
@@ -29,7 +29,7 @@ export class DatasetService {
     let params = new HttpParams().append('srno', srNo)
     return this.http.get<string>(this.serverUrl + '/annotate', { headers, params }).pipe(
       catchError((error) => {
-        return throwError(() => new Error('[Error] Fetching annotate data: ' + error));
+        return throwError(() => new Error('[Error] Fetching annotate data: ' + error.message));
       })
     );
   }
@@ -39,7 +39,7 @@ export class DatasetService {
     let params = new HttpParams().append('srno', srNo)
     return this.http.get<string>(this.serverUrl + '/validate', { headers, params }).pipe(
       catchError((error) => {
-        return throwError(() => new Error('[Error] Fetching annotate data: ' + error));
+        return throwError(() => new Error('[Error] Fetching validate data: ' + error.message));
       })
     );
   }
@@ -60,7 +60,7 @@ export class DatasetService {
         'dist_text': dist_text
       }), httpOptions).pipe(
         catchError(error => {
-          return throwError(() => new Error('[Error] Submitting annotate data: ' + error));
+          return throwError(() => new Error('[Error] Submitting annotate data: ' + error.message));
         })
       );;
   }
@@ -81,7 +81,7 @@ export class DatasetService {
         'dist_text': dist_text
       }), httpOptions).pipe(
         catchError(error => {
-          return throwError(() => new Error('[Error] Editing annotate data: ' + error));
+          return throwError(() => new Error('[Error] Editing annotate data: ' + error.message));
         })
       );;
   }
@@ -100,7 +100,7 @@ export class DatasetService {
         'idx': dist_idx,
       }), httpOptions).pipe(
         catchError(error => {
-          return throwError(() => new Error('[Error] Validating annotate data: ' + error));
+          return throwError(() => new Error('[Error] Validating annotate data: ' + error.message));
         })
       );;  }
 

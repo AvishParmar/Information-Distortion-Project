@@ -8,7 +8,7 @@ import { map, catchError } from 'rxjs/operators';
   providedIn: 'root'
 })
 export class DatasetService {
-  serverUrl: string = "http://127.0.0.1:5000/";
+  serverUrl: string = "http://130.245.128.175:5000/";
 
   constructor(private http: HttpClient) { }
 

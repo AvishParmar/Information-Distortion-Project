@@ -17,6 +17,10 @@ app.config['MONGODB_SETTINGS'] = {
 db = MongoEngine()
 db.init_app(app)
 
+class UserDOM(db.Document):
+    meta = {'collection': 'userCollection'}
+    username = db.StringField()
+    password = db.StringField()
 
 class AnnotationsDOM(db.EmbeddedDocument):
     idx = db.IntField()
@@ -48,9 +52,23 @@ class HeadlineDOM(db.Document):
     #     }
 
 
+@app.route("/authenticate", methods=['POST'])
+def authenticateUser():
+    # print(request.args)
+    req_user = json.loads(request.data)
+    user = UserDOM.objects(username=req_user['username']).get()
+
+    if not user:
+        abort(500, description="[Error] User not found")
+    else: 
+        if user.password != req_user['password']:
+            abort(401, description="[Error] Incorrect password")
+        else:
+            return jsonify(True)
+
 @app.route("/headline", methods=['GET'])
 def get_headline_data():
-    print(request.args)
+    # print(request.args)
 
     srno = json.loads(request.args.get('srno'))
     headline = HeadlineDOM.objects(srno=srno).get()
@@ -120,6 +138,7 @@ def edit_annnotate_data():
 
     headline.annotations[record['idx']].dist_headline = record['dist_text']
     headline.annotations[record['idx']].edit_state = record['edit_state']
+    headline.annotations[record['idx']].userid = record['userid']
     headline.save()
     headline.reload()
 
@@ -143,34 +162,10 @@ def set_validate_data():
 def data_not_found(e):
     return jsonify(error=str(e)), 500
 
+@app.errorhandler(401)
+def unauthorized(e):
+    return jsonify(error=str(e)), 401
+
 
 if __name__ == '__main__':
     app.run(debug=True)
-
-sample_data = {
-    'srno': 1,
-    'og_headline': 'This is a sample headline in Mongo',
-    'annotations': [
-        {
-            'idx': 0,
-            'userid': 'jerin.john',
-            'edit_state': 'Draft',
-            'distortion_category': 'Meosis',
-            'dist_headline': 'This is the distorted random meosis version from Mongo'
-        },
-        {
-            'idx': 1,
-            'userid': 'jerin.john',
-            'edit_state': 'Draft',
-            'distortion_category': 'Generalization',
-            'dist_headline': 'This is the second distorted version from Mongo'
-        },
-        {
-            'idx': 2,
-            'userid': 'jerin.john',
-            'edit_state': 'Draft',
-            'distortion_category': 'Meosis',
-            'dist_headline': 'This is the third distorted version from Mongo'
-        }
-    ]
-}

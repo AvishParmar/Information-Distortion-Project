@@ -16,7 +16,10 @@ import { MatDividerModule } from '@angular/material/divider';
 import { MatIconModule } from '@angular/material/icon';
 import { MatSelectModule } from '@angular/material/select';
 import { MatListModule } from '@angular/material/list';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { DatasetService } from './dataset.service';
+import { LoginService } from './login.service';
+
 
 @NgModule({
   declarations: [
@@ -36,9 +39,10 @@ import { DatasetService } from './dataset.service';
     MatIconModule,
     MatSelectModule,
     MatListModule,
+    MatSnackBarModule,
     HttpClientModule
   ],
-  providers: [DatasetService],
+  providers: [DatasetService, LoginService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

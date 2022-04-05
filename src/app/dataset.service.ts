@@ -8,6 +8,7 @@ import { map, catchError } from 'rxjs/operators';
   providedIn: 'root'
 })
 export class DatasetService {
+  // serverUrl: string = "http://localhost:5000/";
   serverUrl: string = "http://130.245.128.175:5000/";
 
   constructor(private http: HttpClient) { }
@@ -44,7 +45,7 @@ export class DatasetService {
     );
   }
 
-  submitAnnotateData(srno: number, edit_state: string, distortion_category: string, dist_text: string): Observable<string> {
+  submitAnnotateData(srno: number, username: string, edit_state: string, distortion_category: string, dist_text: string): Observable<string> {
     const httpOptions = {
       headers: new HttpHeaders({
         'Content-Type': 'application/json'
@@ -54,7 +55,7 @@ export class DatasetService {
     return this.http.put<string>(this.serverUrl + '/annotate', JSON.stringify(
       {
         'srno': srno,
-        'userid': 'jerin.john', //TODO
+        'userid': username,
         'edit_state': edit_state,
         'distortion_category': distortion_category,
         'dist_text': dist_text
@@ -62,10 +63,10 @@ export class DatasetService {
         catchError(error => {
           return throwError(() => new Error('[Error] Submitting annotate data: ' + error.message));
         })
-      );;
+      );
   }
 
-  editAnnotateData(srno: number, edit_state: string, dist_idx:number, dist_text: string): Observable<string> {
+  editAnnotateData(srno: number, username: string, edit_state: string, dist_idx:number, dist_text: string): Observable<string> {
     const httpOptions = {
       headers: new HttpHeaders({
         'Content-Type': 'application/json'
@@ -75,7 +76,7 @@ export class DatasetService {
     return this.http.post<string>(this.serverUrl + '/annotate', JSON.stringify(
       {
         'srno': srno,
-        'userid': 'jerin.john', //TODO
+        'userid': username,
         'edit_state': edit_state,
         'idx': dist_idx,
         'dist_text': dist_text

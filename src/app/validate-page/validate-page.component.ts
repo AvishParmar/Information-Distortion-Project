@@ -10,6 +10,7 @@ import { AnnotationsDOM, distortion_categories, HeadlineDOM } from '../HeadlineD
 export class ValidatePageComponent implements OnInit {
 
   @Input() headline!: HeadlineDOM;
+  @Input() username!: string;
   selectedAnnotation!: [number, string, string];
   editFlag: boolean;
   editBtnLabel: string;
@@ -45,7 +46,7 @@ export class ValidatePageComponent implements OnInit {
   }
 
   editHeadlineData(): void {
-    this.datasetService.editAnnotateData(this.headline.srno, 'Draft', this.selectedAnnotation[0], this.inputDist).subscribe(
+    this.datasetService.editAnnotateData(this.headline.srno, this.username, 'Draft', this.selectedAnnotation[0], this.inputDist).subscribe(
       (response) => {
         this.headline = new HeadlineDOM(response);
       },

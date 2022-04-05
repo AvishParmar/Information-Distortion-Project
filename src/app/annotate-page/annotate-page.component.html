@@ -23,6 +23,9 @@
                     </mat-option>
                 </mat-select>
             </mat-form-field>
+            <button mat-button color="primary" (click)="openSnackBar()" *ngIf="inputDistCat">
+                <mat-icon>info</mat-icon>
+            </button>
             <mat-form-field class="anno-input" appearance="fill">
                 <mat-label>Distorted Headline</mat-label>
                 <input matInput #inputText maxlength="256" placeholder="Enter distorted version.."

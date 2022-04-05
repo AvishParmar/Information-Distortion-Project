@@ -1,4 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { DatasetService } from '../dataset.service';
 import { HeadlineDOM } from '../HeadlineDOM';
 import { distortion_categories } from '../HeadlineDOM';
@@ -10,11 +11,12 @@ import { distortion_categories } from '../HeadlineDOM';
 })
 export class AnnotatePageComponent implements OnInit {
   @Input() headline!: HeadlineDOM;
+  @Input() username!: string;
   inputDist!: string;
   inputDistCat!: string;
   distortion_categories: String[];
 
-  constructor(private datasetService: DatasetService) {
+  constructor(private datasetService: DatasetService, private _snackBar: MatSnackBar) {
     this.distortion_categories = distortion_categories;
   }
 
@@ -47,13 +49,13 @@ export class AnnotatePageComponent implements OnInit {
         alert('Please enter a valid distortion');
       } else {
         if (confirm('Submit below distortion?')) {
-          this.datasetService.submitAnnotateData(this.headline.srno, 'Draft', this.inputDistCat, this.inputDist)
+          this.datasetService.submitAnnotateData(this.headline.srno, this.username, 'Draft', this.inputDistCat, this.inputDist)
             .subscribe((response) => {
               this.headline = new HeadlineDOM(response);
               // console.log(this.headline.annotations)
             });
-            this.inputDist = '';
-            this.inputDistCat = '';
+          this.inputDist = '';
+          this.inputDistCat = '';
         }
       }
     } else if (mode == 'next') {
@@ -63,4 +65,14 @@ export class AnnotatePageComponent implements OnInit {
     }
   }
 
+  getDistortionExample(): string {
+    return 'Example of '+ this.inputDistCat + ' distortion type'
+  }
+
+  openSnackBar() {
+    this._snackBar.open(this.getDistortionExample(), 'Dismiss', {
+      horizontalPosition: "center",
+      verticalPosition: "bottom",
+    });
+  }
 }

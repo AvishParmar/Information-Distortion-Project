@@ -1,28 +1,23 @@
 <mat-card class="main-card">
     <mat-card-title>Information Distortion Dataset Processor</mat-card-title>
     <mat-card-subtitle>Dept. of Computer Science, Stony Brook University</mat-card-subtitle>
-    <mat-card-content class="main-card-content" *ngIf="homeFlag">
+    <mat-card-content class="main-card-content" *ngIf="homeFlag || loginFlag">
         <p> Web Interface for annotation and review of Medical
             Headlines dataset containing Information Distortion.</p>
     </mat-card-content>
     <mat-card-actions>
-        <button mat-raised-button class="home-button" color="primary" (click)="btnClick('annotate')"
-            *ngIf="homeFlag">Annotate</button>
-        <p></p>
-        <button mat-raised-button class="home-button" color="accent" (click)="btnClick('validate')"
-            *ngIf="homeFlag">Validate</button>
-        <div class="top-bar" *ngIf="annotateFlag || validateFlag">
+        <div class="top-bar" *ngIf="!loginFlag">
             <div>
-                <button mat-raised-button class="back-button" (click)="btnClick('home')" *ngIf="!homeFlag">
-                    <mat-icon>arrow_back_ios</mat-icon>
-                    Back
+                <button mat-raised-button class="back-button" (click)="btnClick('home')">
+                    <mat-icon>{{backBtnIcon}}</mat-icon>
+                    {{backBtnLabel}}
                 </button>
             </div>
             <div>
                 <h1 *ngIf="annotateFlag">Headline Annotation</h1>
                 <h1 *ngIf="validateFlag">Headline Validation</h1>
             </div>
-            <div>
+            <div *ngIf="!homeFlag">
                 <mat-form-field appearance="outline" class="search-bar">
                     <mat-label>Retrieve headline by serial no.</mat-label>
                     <input type="number" [(ngModel)]="inputSrNo" name="inputSrNo" matInput placeholder="Enter sr no.">
@@ -32,7 +27,36 @@
                 </mat-form-field>
             </div>
         </div>
+        <button mat-raised-button class="home-button" color="primary" (click)="btnClick('annotate')"
+            *ngIf="homeFlag">Annotate</button>
+        <p></p>
+        <button mat-raised-button class="home-button" color="accent" (click)="btnClick('validate')"
+            *ngIf="homeFlag">Validate</button>
     </mat-card-actions>
 </mat-card>
-<app-annotate-page *ngIf="annotateFlag" [headline]="headline"></app-annotate-page>
-<app-validate-page *ngIf="validateFlag" [headline]="headline"></app-validate-page>
+<mat-card class="login-card" *ngIf="loginFlag">
+    <p></p>
+    <mat-card-content class="login-card-content">
+        <p></p>
+        <form class="login-form" #loginForm="ngForm">
+            <mat-form-field class="login-input" appearance="fill">
+                <mat-label>Username</mat-label>
+                <input matInput #inputText placeholder="Enter your username.." [(ngModel)]="username" name="username">
+            </mat-form-field>
+            <p></p>
+            <mat-form-field class="login-input" appearance="fill">
+                <mat-label>Password</mat-label>
+                <input matInput #inputText placeholder="Enter your password.." [(ngModel)]="password" name="password"
+                    type="password">
+            </mat-form-field>
+        </form>
+    </mat-card-content>
+    <mat-card-actions>
+        <button mat-raised-button class="global-button" color="accent" (click)="btnClick('login')">
+            <mat-icon>verified_user</mat-icon>
+            Login
+        </button>
+    </mat-card-actions>
+</mat-card>
+<app-annotate-page *ngIf="annotateFlag" [headline]="headline" [username]="username"></app-annotate-page>
+<app-validate-page *ngIf="validateFlag" [headline]="headline" [username]="username"></app-validate-page>

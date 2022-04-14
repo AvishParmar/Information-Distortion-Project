@@ -3,18 +3,27 @@
         <p> [{{headline.srno}}] <b>Original Headline:</b> {{headline.og_headline}}</p>
         <mat-divider></mat-divider>
         <div mat-subheader>Submitted annotations:</div>
-        <mat-selection-list role="list" class="valid-list" #annolist [multiple]="false" (selectionChange)="onSelection($event, annolist.selectedOptions.selected)">
-            <mat-list-option *ngFor="let anno of headline.annotations" [value]="anno" role="listbox" class="valid-list-item">
+        <mat-selection-list role="list" class="valid-list" #annolist [multiple]="false"
+            (selectionChange)="onSelection($event, annolist.selectedOptions.selected)">
+            <mat-list-option *ngFor="let anno of headline.annotations" [value]="anno" role="listbox"
+                class="valid-list-item">
                 <span matLine><b>Distortion Category:</b> {{anno.distortion_category}}</span>
                 <span matLine><b>Distorted Headline:</b> {{anno.dist_headline}}</span>
                 <span matLine>User Id: {{anno.userid}} | Edit State: <b>{{anno.edit_state}}</b></span>
             </mat-list-option>
         </mat-selection-list>
+        <span matLine *ngIf="selectedAnnotation">
+            <hr><p></p>
+            <b>Selected annotation:</b> {{selectedAnnotation[1]+' | '+selectedAnnotation[2]}}
+            <button mat-button color="primary" (click)="openSnackBar()">
+                <mat-icon>info</mat-icon>
+            </button>
+        </span>
         <form class="validate-form" *ngIf="editFlag" appearance="fill">
-            <span matLine><b>Selected annotation:</b> {{selectedAnnotation[1]+' | '+selectedAnnotation[2]}}</span>
-            <mat-form-field class="valid-input" >
+            <mat-form-field class="valid-input">
                 <mat-label>Edit annotation</mat-label>
-                <input matInput #inputText maxlength="256" placeholder="Enter new distorted version.." [(ngModel)]="inputDist" name="inputDist">
+                <input matInput #inputText maxlength="256" placeholder="Enter new distorted version.."
+                    [(ngModel)]="inputDist" name="inputDist">
                 <mat-hint align="start"><strong>Please cancel this edit in case of uncertainities.</strong> </mat-hint>
                 <mat-hint align="end">{{inputText.value.length}} characters</mat-hint>
             </mat-form-field>

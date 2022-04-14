@@ -1,6 +1,8 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { DatasetService } from '../dataset.service';
-import { AnnotationsDOM, distortion_categories, HeadlineDOM } from '../HeadlineDOM';
+import { distortion_categories, HeadlineDOM } from '../HeadlineDOM';
+import * as globalVars from '../global-vars';
 
 @Component({
   selector: 'app-validate-page',
@@ -19,7 +21,7 @@ export class ValidatePageComponent implements OnInit {
   inputDist!: string;
   distortion_categories: String[];
 
-  constructor(private datasetService: DatasetService) {
+  constructor(private datasetService: DatasetService, private _snackBar: MatSnackBar) {
     this.editFlag = false;
     this.editBtnIcon = "edit";
     this.editBtnLabel = "Edit annotation";
@@ -125,5 +127,20 @@ export class ValidatePageComponent implements OnInit {
         this.submitBtnLabel = "Approve";
       }
     }
+  }
+
+  getDistortionExample(): string {
+    return 'Example of ' + this.selectedAnnotation[1] + ' distortion:' +
+      '\n\nOriginal Headline: ' + (globalVars.distortionExamples as any)[this.selectedAnnotation[1]].ogHeadline +
+      '\n\nDistortion: ' + (globalVars.distortionExamples as any)[this.selectedAnnotation[1]].distortion
+  }
+
+  openSnackBar() {
+    this._snackBar.open(this.getDistortionExample(), 'Dismiss', {
+      duration: 15000,
+      horizontalPosition: "center",
+      verticalPosition: "bottom",
+      panelClass: ['example-snackbar']
+    });
   }
 }

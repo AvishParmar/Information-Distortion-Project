@@ -30,3 +30,7 @@ mat-selection-list{
   text-align: left;
   font-size: 12px;
 }
+
+::ng-deep .example-snackbar {
+	white-space: pre-wrap
+}

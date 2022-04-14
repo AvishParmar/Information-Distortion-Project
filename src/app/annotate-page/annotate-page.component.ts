@@ -3,6 +3,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { DatasetService } from '../dataset.service';
 import { HeadlineDOM } from '../HeadlineDOM';
 import { distortion_categories } from '../HeadlineDOM';
+import * as globalVars from '../global-vars';
 
 @Component({
   selector: 'app-annotate-page',
@@ -66,13 +67,17 @@ export class AnnotatePageComponent implements OnInit {
   }
 
   getDistortionExample(): string {
-    return 'Example of '+ this.inputDistCat + ' distortion type'
+    return 'Example of ' + this.inputDistCat + ' distortion:' +
+      '\n\nOriginal Headline: ' + (globalVars.distortionExamples as any)[this.inputDistCat].ogHeadline +
+      '\n\nDistortion: ' + (globalVars.distortionExamples as any)[this.inputDistCat].distortion
   }
 
   openSnackBar() {
     this._snackBar.open(this.getDistortionExample(), 'Dismiss', {
+      duration: 15000,
       horizontalPosition: "center",
       verticalPosition: "bottom",
+      panelClass: ['example-snackbar']
     });
   }
 }

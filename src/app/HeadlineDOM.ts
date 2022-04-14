@@ -36,4 +36,5 @@ export class HeadlineDOM {
     };
 }
 
-export const distortion_categories: String[] = ['Generalization', 'Specialization', 'Hyperbole', 'Meosis'];
+// export const distortion_categories: String[] = ['Generalization', 'Specialization', 'Hyperbole', 'Meosis'];
+export const distortion_categories: String[] = ['Hyperbole', 'Meosis'];

@@ -3,14 +3,13 @@ import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { HeadlineDOM } from './HeadlineDOM';
 import { Observable, throwError } from 'rxjs';
 import { map, catchError } from 'rxjs/operators';
+import * as globalVars from './global-vars';
 
 @Injectable({
   providedIn: 'root'
 })
 export class DatasetService {
-  // serverUrl: string = "http://localhost:5000/";
-  serverUrl: string = "http://130.245.128.175:5000/";
-
+  
   constructor(private http: HttpClient) { }
 
   getHeadlineData(inputSrNo: number): Observable<string> {
@@ -18,7 +17,7 @@ export class DatasetService {
     let headers = new HttpHeaders().append('Content-Type', 'application/json');
     let params = new HttpParams().append('srno', inputSrNo)
 
-    return this.http.get<string>(this.serverUrl + '/headline', { headers, params }).pipe(
+    return this.http.get<string>(globalVars.serverUrl + '/headline', { headers, params }).pipe(
       catchError((error) => {
         return throwError(() => new Error('[Error] Fetching headline data: ' + error.message));
       })
@@ -28,7 +27,7 @@ export class DatasetService {
   getAnnotateData(srNo: number): Observable<string> {
     let headers = new HttpHeaders().append('Content-Type', 'application/json');
     let params = new HttpParams().append('srno', srNo)
-    return this.http.get<string>(this.serverUrl + '/annotate', { headers, params }).pipe(
+    return this.http.get<string>(globalVars.serverUrl + '/annotate', { headers, params }).pipe(
       catchError((error) => {
         return throwError(() => new Error('[Error] Fetching annotate data: ' + error.message));
       })
@@ -38,7 +37,7 @@ export class DatasetService {
   getValidateData(srNo: number): Observable<string> {
     let headers = new HttpHeaders().append('Content-Type', 'application/json');
     let params = new HttpParams().append('srno', srNo)
-    return this.http.get<string>(this.serverUrl + '/validate', { headers, params }).pipe(
+    return this.http.get<string>(globalVars.serverUrl + '/validate', { headers, params }).pipe(
       catchError((error) => {
         return throwError(() => new Error('[Error] Fetching validate data: ' + error.message));
       })
@@ -52,7 +51,7 @@ export class DatasetService {
       })
     };
 
-    return this.http.put<string>(this.serverUrl + '/annotate', JSON.stringify(
+    return this.http.put<string>(globalVars.serverUrl + '/annotate', JSON.stringify(
       {
         'srno': srno,
         'userid': username,
@@ -73,7 +72,7 @@ export class DatasetService {
       })
     };
 
-    return this.http.post<string>(this.serverUrl + '/annotate', JSON.stringify(
+    return this.http.post<string>(globalVars.serverUrl + '/annotate', JSON.stringify(
       {
         'srno': srno,
         'userid': username,
@@ -94,7 +93,7 @@ export class DatasetService {
       })
     };
 
-    return this.http.post<string>(this.serverUrl + '/validate', JSON.stringify(
+    return this.http.post<string>(globalVars.serverUrl + '/validate', JSON.stringify(
       {
         'srno': srno,
         'edit_state': edit_state,

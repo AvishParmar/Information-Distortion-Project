@@ -1,14 +1,13 @@
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { catchError, Observable, throwError } from 'rxjs';
+import * as globalVars from './global-vars';
 
 @Injectable({
   providedIn: 'root'
 })
 export class LoginService {
-  // serverUrl: string = "http://localhost:5000/";
-  serverUrl: string = "http://130.245.128.175:5000/";
-
+  
   constructor(private http: HttpClient) { }
 
   authenticate(username: string, password: string): Observable<boolean> {
@@ -19,7 +18,7 @@ export class LoginService {
       })
     };
 
-    return this.http.post<boolean>(this.serverUrl + '/authenticate', JSON.stringify({
+    return this.http.post<boolean>(globalVars.serverUrl + '/authenticate', JSON.stringify({
       'username': username,
       'password': password
     }), httpOptions).pipe(

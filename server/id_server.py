@@ -17,10 +17,12 @@ app.config['MONGODB_SETTINGS'] = {
 db = MongoEngine()
 db.init_app(app)
 
+
 class UserDOM(db.Document):
     meta = {'collection': 'userCollection'}
     username = db.StringField()
     password = db.StringField()
+
 
 class AnnotationsDOM(db.EmbeddedDocument):
     idx = db.IntField()
@@ -60,11 +62,12 @@ def authenticateUser():
 
     if not user:
         abort(500, description="[Error] User not found")
-    else: 
+    else:
         if user.password != req_user['password']:
             abort(401, description="[Error] Incorrect password")
         else:
             return jsonify(True)
+
 
 @app.route("/headline", methods=['GET'])
 def get_headline_data():
@@ -83,7 +86,7 @@ def get_headline_data():
 def get_annnotate_data():
     srno = json.loads(request.args.get('srno'))
     headline = HeadlineDOM.objects(
-        srno__gt=srno, annotations__size=0).exclude("id").first()
+        srno=srno+1).exclude("id").first()
     # print(headline.to_json())
     if not headline:
         headline = HeadlineDOM.objects(srno__gt=srno).exclude("id").first()
@@ -97,7 +100,7 @@ def get_annnotate_data():
 def get_validate_data():
     srno = json.loads(request.args.get('srno'))
     headline = HeadlineDOM.objects(
-        srno__gt=srno, annotations__not__size=0).exclude("id").first()
+        srno=srno+1).exclude("id").first()
     # print(headline.to_json())
 
     if not headline:
@@ -161,6 +164,7 @@ def set_validate_data():
 @app.errorhandler(500)
 def data_not_found(e):
     return jsonify(error=str(e)), 500
+
 
 @app.errorhandler(401)
 def unauthorized(e):

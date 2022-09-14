@@ -12,7 +12,7 @@
                 <span matLine>User Id: {{anno.userid}} | Edit State: <b>{{anno.edit_state}}</b></span>
             </mat-list-option>
         </mat-selection-list>
-        <span matLine *ngIf="selectedAnnotation">
+        <span matLine *ngIf="selectedAnnotation && selectedAnnotation[0] != -1">
             <hr>
             <p></p>
             <b>Selected annotation:</b> {{selectedAnnotation[1]+' | '+selectedAnnotation[2]}}

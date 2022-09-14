@@ -52,7 +52,7 @@ export class HomePageComponent implements OnInit {
   }
 
   getHeadlineData(inputSrNo: number): void {
-    this.datasetService.getHeadlineData(inputSrNo).subscribe(
+    this.datasetService.getHeadlineData(inputSrNo - 1).subscribe(
       (response) => {
         this.headline = new HeadlineDOM(response);
       },
@@ -60,7 +60,7 @@ export class HomePageComponent implements OnInit {
         console.log('[Error] Fetching headline data: ' + error);
         alert('Error fetching headline data');
         if (inputSrNo > 0) {
-          this.getHeadlineData(inputSrNo - 1);
+          this.getHeadlineData(inputSrNo - 2);
         }
       })
   }
@@ -72,14 +72,14 @@ export class HomePageComponent implements OnInit {
       this.annotateFlag = true;
       this.backBtnIcon = "arrow_back_ios";
       this.backBtnLabel = "Back";
-      console.log("Switiching visibility for " + mode);
+      console.log("Switching visibility for " + mode);
     } else if (mode == 'validate') {
       this.homeFlag = false;
       this.annotateFlag = false;
       this.validateFlag = true;
       this.backBtnIcon = "arrow_back_ios";
       this.backBtnLabel = "Back";
-      console.log("Switiching visibility for " + mode);
+      console.log("Switching visibility for " + mode);
     } else if (mode == 'home') {
       if (!this.homeFlag) {
         this.homeFlag = true;
@@ -91,7 +91,7 @@ export class HomePageComponent implements OnInit {
         this.homeFlag = false;
         this.loginFlag = true;
       }
-      console.log("Switiching visibility for " + mode);
+      console.log("Switching visibility for " + mode);
     } else if (mode == 'search') {
       this.getHeadlineData(this.inputSrNo);
     } else if (mode == 'login') {

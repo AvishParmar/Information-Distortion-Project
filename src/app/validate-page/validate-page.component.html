@@ -1,6 +1,6 @@
 <mat-card class="validate-card">
     <mat-card-content class="validate-card-content">
-        <p> [{{headline.srno}}] <b>Original Headline:</b> {{headline.og_headline}}</p>
+        <p> [{{headline.srno+1}}] <b>Original Headline:</b> {{headline.og_headline}}</p>
         <mat-divider></mat-divider>
         <div mat-subheader>Submitted annotations:</div>
         <mat-selection-list role="list" class="valid-list" #annolist [multiple]="false"
@@ -13,7 +13,8 @@
             </mat-list-option>
         </mat-selection-list>
         <span matLine *ngIf="selectedAnnotation">
-            <hr><p></p>
+            <hr>
+            <p></p>
             <b>Selected annotation:</b> {{selectedAnnotation[1]+' | '+selectedAnnotation[2]}}
             <button mat-button color="primary" (click)="openSnackBar()">
                 <mat-icon>info</mat-icon>
@@ -30,6 +31,9 @@
         </form>
     </mat-card-content>
     <mat-card-actions>
+        <button mat-raised-button class="global-button" (click)="btnClick('prev')">
+            <mat-icon>first_page</mat-icon>Previous
+        </button>
         <button mat-raised-button class="global-button" color="accent" (click)="btnClick('edit')">
             <mat-icon>{{editBtnIcon}}</mat-icon>
             {{editBtnLabel}}

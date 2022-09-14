@@ -29,7 +29,7 @@ export class AnnotatePageComponent implements OnInit {
     this.datasetService.getAnnotateData(srno).subscribe(
       (response) => {
         this.headline = new HeadlineDOM(response);
-        // console.log(this.headline.annotations)
+        // console.log(this.headline)
       },
       (error: Error) => {
         console.log('[Error] Fetching headline data: ' + error);
@@ -61,6 +61,10 @@ export class AnnotatePageComponent implements OnInit {
       }
     } else if (mode == 'next') {
       this.getHeadlineData(this.headline.srno)
+      this.inputDist = '';
+      this.inputDistCat = '';
+    } else if (mode == 'prev' && this.headline.srno > 0) {
+      this.getHeadlineData(this.headline.srno - 2)
       this.inputDist = '';
       this.inputDistCat = '';
     }

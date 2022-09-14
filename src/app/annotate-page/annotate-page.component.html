@@ -2,7 +2,7 @@
     <p></p>
     <mat-card-content class="annotate-card-content">
         <div class="top-bar">
-            <p> [{{headline.srno}}] <b>Original Headline:</b> {{headline.og_headline}}</p>
+            <p> [{{headline.srno+1}}] <b>Original Headline:</b> {{headline.og_headline}}</p>
         </div>
         <p></p>
         <mat-divider></mat-divider>
@@ -36,6 +36,9 @@
         </form>
     </mat-card-content>
     <mat-card-actions>
+        <button mat-raised-button class="global-button" (click)="btnClick('prev')">
+            <mat-icon>first_page</mat-icon>Previous
+        </button>
         <button mat-raised-button class="global-button" color="warn" (click)="btnClick('submit')">
             <mat-icon>check_circle</mat-icon>
             Submit

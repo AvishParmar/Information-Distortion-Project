@@ -108,7 +108,10 @@ export class ValidatePageComponent implements OnInit {
       }
     } else if (mode == 'next') {
       this.getHeadlineData(this.headline.srno)
-    } else if (mode == 'edit') {
+    } else if (mode == 'prev' && this.headline.srno > 0) {
+      this.getHeadlineData(this.headline.srno - 2)
+    }
+    else if (mode == 'edit') {
       this.editFlag = !this.editFlag;
       if (this.editFlag) {
         if (this.selectedAnnotation == null || this.selectedAnnotation[0] == -1) {

@@ -1,0 +1,13 @@
+server {
+    listen 4200 default_server;
+    listen [::]:4200 default_server;
+
+    root /home/rbanerjee/InfoDistortion_Annotator/dist/info-distortion-annotator/;
+    index index.html index.htm index.nginx-debian.html;
+
+    server_name _;
+
+    location / {
+        try_files $uri $uri/ /index.html =404;
+    }
+} 
